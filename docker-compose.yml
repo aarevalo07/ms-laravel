@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  products-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: products-service-image
+    container_name: microservicio_productos
+    restart: unless-stopped
+    ports:
+      - "8000:8000" # Mapea el puerto 8000 de tu PC al 8000 del contenedor
+    volumes:
+      - ./:/var/www # Sincroniza tu código local con el contenedor (útil para editar en vivo)
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
